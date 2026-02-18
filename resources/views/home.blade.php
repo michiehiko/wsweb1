@@ -1,4 +1,3 @@
-{{-- 1. Kita ganti 'layouts.app' jadi 'layouts.master' --}}
 @extends('layouts.master')
 
 @section('content')

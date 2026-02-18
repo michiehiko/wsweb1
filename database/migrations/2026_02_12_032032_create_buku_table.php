@@ -12,15 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('buku', function (Blueprint $table) {
-            $table->integer('idbuku')->autoIncrement();
+            $table->increments('idbuku');
             $table->string('kode', 20);
             $table->string('judul', 500);
             $table->string('pengarang', 200);
             
             // Foreign Key ke tabel kategori
-            $table->integer('idkategori');
+            $table->unsignedInteger('idkategori');
             $table->timestamps();
-            $table->primary('idbuku');
 
             $table->foreign('idkategori')->references('idkategori')->on('kategori')->onDelete('cascade');
         });
