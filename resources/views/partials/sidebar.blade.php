@@ -35,6 +35,13 @@
                   <i class="mdi mdi-book-open-page-variant menu-icon"></i>
                 </a>
               </li> 
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('cetak.sertifikat') }}" target="_blank">
+                  <span class="menu-title">Cetak Sertifikat</span>
+                  <i class="mdi mdi-certificate menu-icon"></i>
+                </a>
+              </li>
             </ul>
           </ul>
         </nav>

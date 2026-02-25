@@ -59,9 +59,9 @@
                     </div>
 
                     <div class="mb-2 d-grid gap-2">
-                        <button type="button" class="btn btn-block btn-facebook auth-form-btn">
-                            <i class="mdi mdi-facebook me-2"></i>Connect using facebook
-                        </button>
+                        <a href="{{ route('auth.google') }}" class="btn btn-danger btn-lg font-weight-medium auth-form-btn">
+                            <i class="mdi mdi-google me-2"></i> MASUK DENGAN GOOGLE
+                        </a>
                     </div>
 
                     <div class="text-center mt-4 font-weight-light"> 

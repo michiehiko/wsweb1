@@ -29,8 +29,17 @@
                         <tr>
                             <td> {{ $item->idkategori }} </td>
                             <td> {{ $item->nama_kategori }} </td>
-                        </tr>
-                        @endforeach
+                                <td>
+                                    <a href="{{ route('edit_kategori', $item->idkategori) }}" class="btn btn-sm btn-warning">Edit</a>
+
+                                    <form action="{{ route('hapus_kategori', $item->idkategori) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Yakin ingin menghapus?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
                     </tbody>
                 </table>
                 

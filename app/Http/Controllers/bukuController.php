@@ -37,4 +37,34 @@ class bukuController extends Controller
 
         return redirect()->route('buku')->with('success', 'Buku berhasil ditambahkan!');
     }
+
+    public function edit($id)
+    {
+        $buku = Buku::findOrFail($id);
+        $kategori = Kategori::all(); // Tetap butuh ini buat dropdown
+        return view('feature.editBuku', compact('buku', 'kategori'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'kode' => 'required|string|max:20',
+            'judul' => 'required|string|max:500',
+            'pengarang' => 'required|string|max:200',
+            'idkategori' => 'required|integer'
+        ]);
+
+        $buku = Buku::findOrFail($id);
+        $buku->update($request->all()); // Cara cepat update semua kolom yg sesuai fillable
+
+        return redirect()->route('buku')->with('success', 'Buku berhasil diperbarui!');
+    }
+
+    public function destroy($id)
+    {
+        $buku = Buku::findOrFail($id);
+        $buku->delete();
+
+        return redirect()->route('buku')->with('success', 'Buku berhasil dihapus!');
+    }
 }
