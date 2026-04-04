@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\pdfController;
-
+use App\Http\Controllers\barangController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,3 +47,6 @@ Route::put('/buku/{id}', [App\Http\Controllers\bukuController::class, 'update'])
 Route::delete('/buku/{id}', [App\Http\Controllers\bukuController::class, 'destroy'])->name('hapus_buku')->middleware('auth');
 
 Route::get('/cetak-sertifikat', [pdfController::class, 'cetakSertifikat'])->name('cetak.sertifikat')->middleware('auth');
+
+Route::get('/barang', [barangController::class, 'index'])->name('barang')->middleware('auth');
+Route::post('/barang/cetak', [barangController::class, 'cetak'])->name('barang_cetak')->middleware('auth');

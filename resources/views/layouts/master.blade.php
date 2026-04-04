@@ -78,6 +78,10 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+    <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
+    
+    @stack('scripts')
+</body>
     <!-- End custom js for this page -->
   </body>
 </html>
