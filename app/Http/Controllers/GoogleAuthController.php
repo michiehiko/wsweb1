@@ -45,7 +45,7 @@ class GoogleAuthController extends Controller
     
     public function sendOtpEmail($user)
     {
-        $otp = strtoupper(Str::random(6));
+        $otp = (string) mt_rand(100000, 999999);
   
         $user->update(['otp' => $otp]);
 

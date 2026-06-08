@@ -22,6 +22,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('idkategori')->references('idkategori')->on('kategori')->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 

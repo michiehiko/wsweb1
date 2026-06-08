@@ -1,46 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Label Harga</title>
+    <meta charset="UTF-8">
+    <title>Cetak Label TnJ 108</title>
     <style>
-
-        @page { margin: 5mm; } 
-        body { font-family: sans-serif; margin: 0; padding: 0; }
-        
-        .label-container {
+        @page {
+            /* Margin tepi kertas disetel sangat tipis karena ukuran custom sudah ngepas */
+            margin-top: 3mm; 
+            margin-left: 5mm; 
+            margin-right: 5mm;
+            margin-bottom: 0mm;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 8px; /* Font diturunkan sedikit biar tidak meluber */
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            border-collapse: collapse;
+            table-layout: fixed; 
             width: 100%;
         }
-
-        .label-box {
-            float: left;
-            width: 20%; 
-            height: 38mm;   
-            box-sizing: border-box;
-            padding: 5px;
+        td {
+            width: 38mm; /* Lebar absolut label 108 */
+            height: 18mm; /* Tinggi absolut label 108 */
             text-align: center;
-            /*border: 1px dashed #ccc; */
+            vertical-align: middle;
+            overflow: hidden;
+            padding: 0.5mm; 
+            
+            /* TIPS: Buka comment garis putus-putus di bawah ini buat ngetes letak di HVS biasa */
+            border: 1px dotted #ccc; 
         }
-
-        .nama-barang { font-size: 11px; font-weight: bold; margin-bottom: 5px; }
-        .harga { font-size: 14px; color: #000; font-weight: bold; }
-        .id-barang { font-size: 9px; margin-top: 5px; color: #555; }
     </style>
 </head>
 <body>
-    <div class="label-container">
-        
-        @for ($i = 0; $i < $skip_count; $i++)
-            <div class="label-box"></div>
-        @endfor
+    <table>
+        <tr>
+        @php $counter = 0; @endphp
 
-        @foreach ($data_cetak as $item)
-            <div class="label-box">
-                <div class="nama-barang">{{ $item->nama }}</div>
-                <div class="harga">Rp {{ number_format($item->harga, 0, ',', '.') }}</div>
-                <div class="id-barang">ID: {{ $item->id_barang }}</div>
-            </div>
+        @foreach($items as $item)
+            @if($counter > 0 && $counter % 5 == 0)
+                </tr><tr>
+            @endif
+
+            <td>
+                @if($item !== null)
+                    <strong>{{ $item->nama }}</strong><br>
+                    Rp {{ number_format($item->harga, 0, ',', '.') }}
+                @endif
+            </td>
+
+            @php $counter++; @endphp
         @endforeach
 
-    </div>
+        @while($counter % 5 != 0)
+            <td></td>
+            @php $counter++; @endphp
+        @endwhile
+        </tr>
+    </table>
 </body>
 </html>

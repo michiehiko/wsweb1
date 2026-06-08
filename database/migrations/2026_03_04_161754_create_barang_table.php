@@ -20,12 +20,21 @@ return new class extends Migration
         // Memasang Trigger menggunakan raw SQL
         DB::unprepared('
             CREATE TRIGGER trigger_id_barang
-            BEFORE INSERT
-            ON barang FOR EACH ROW
+            BEFORE INSERT ON barang FOR EACH ROW
             BEGIN
                 DECLARE nr INTEGER DEFAULT 0;
-                SET nr = (SELECT COUNT(id_barang) FROM barang WHERE DAY(timestamp) = DAY(CURRENT_TIMESTAMP) AND MONTH(timestamp) = MONTH(CURRENT_TIMESTAMP) AND YEAR(timestamp) = YEAR(CURRENT_TIMESTAMP)) + 1;
-                SET NEW.id_barang = CONCAT(RIGHT(YEAR(CURRENT_TIMESTAMP), 2), LPAD(MONTH(CURRENT_TIMESTAMP),2,"0"), LPAD(DAY(CURRENT_TIMESTAMP),2,"0"), LPAD(nr, 2, "0"));
+                
+                SET nr = (SELECT COUNT(id_barang) FROM barang 
+                          WHERE DAY(timestamp) = DAY(CURRENT_TIMESTAMP) 
+                          AND MONTH(timestamp) = MONTH(CURRENT_TIMESTAMP) 
+                          AND YEAR(timestamp) = YEAR(CURRENT_TIMESTAMP)) + 1;
+                          
+                SET NEW.id_barang = CONCAT(
+                    RIGHT(YEAR(CURRENT_TIMESTAMP), 2),
+                    LPAD(MONTH(CURRENT_TIMESTAMP), 2, "0"),
+                    LPAD(DAY(CURRENT_TIMESTAMP), 2, "0"),
+                    LPAD(nr, 2, "0")
+                );
             END
         ');
     }

@@ -47,6 +47,26 @@ Route::put('/buku/{id}', [App\Http\Controllers\bukuController::class, 'update'])
 Route::delete('/buku/{id}', [App\Http\Controllers\bukuController::class, 'destroy'])->name('hapus_buku')->middleware('auth');
 
 Route::get('/cetak-sertifikat', [pdfController::class, 'cetakSertifikat'])->name('cetak.sertifikat')->middleware('auth');
+Route::get('/cetak-undangan', [PdfController::class, 'cetakUndangan'])->name('cetak.undangan');
 
 Route::get('/barang', [barangController::class, 'index'])->name('barang')->middleware('auth');
 Route::post('/barang/cetak', [barangController::class, 'cetak'])->name('barang_cetak')->middleware('auth');
+
+// --- ROUTE KHUSUS TUGAS KANTIN & AJAX ---
+Route::prefix('admin-kantin')->middleware('auth')->group(function () {
+    // Tampilan Halaman Dropdown Wilayah
+    Route::get('/wilayah', [App\Http\Controllers\Kantin\WilayahController::class, 'index'])->name('kantin_wilayah');
+    
+    // API Endpoint untuk Axios (Cascading Dropdown)
+    Route::get('/api/kota/{id_provinsi}', [App\Http\Controllers\Kantin\WilayahController::class, 'getKota']);
+    Route::get('/api/kecamatan/{id_kota}', [App\Http\Controllers\Kantin\WilayahController::class, 'getKecamatan']);
+    Route::get('/api/kelurahan/{id_kecamatan}', [App\Http\Controllers\Kantin\WilayahController::class, 'getKelurahan']);
+    Route::get('/wilayah-ajax', [App\Http\Controllers\Kantin\WilayahController::class, 'indexAjax'])->name('kantin_wilayah_ajax');
+
+    // --- ROUTE KHUSUS KASIR ---
+    Route::get('/kasir', [App\Http\Controllers\Kantin\KasirController::class, 'index'])->name('kantin.kasir');
+    Route::get('/api/barang/{kode}', [App\Http\Controllers\Kantin\KasirController::class, 'searchBarang']);
+    Route::post('/api/checkout', [App\Http\Controllers\Kantin\KasirController::class, 'checkout']);
+
+    Route::post('/api/midtrans-webhook', [App\Http\Controllers\Kantin\KasirController::class, 'webhook']);
+});

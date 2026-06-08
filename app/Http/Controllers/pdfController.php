@@ -24,4 +24,17 @@ class PdfController extends Controller
 
         return $pdf->stream('sertifikat-saya.pdf');
     }
+
+    public function cetakUndangan()
+    {
+        $filePath = public_path('files/contoh-undangan.pdf');
+        
+        if (file_exists($filePath)) {
+          
+            return response()->file($filePath);
+            
+        } else {
+            return abort(404, 'File undangan tidak ditemukan, cek lagi foldernya ya!');
+        }
+    }
 }

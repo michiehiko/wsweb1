@@ -1,6 +1,13 @@
 @extends('layouts.master') 
 
 @section('content')
+<style>
+    /* Menambahkan pointer pada baris tabel */
+    #tabelBarang tbody tr {
+        cursor: pointer;
+    }
+</style>
+
 <div class="container">
     <h2>Daftar Barang UMKM</h2>
 
@@ -168,7 +175,7 @@
         // --- TUGAS 1 & 2: Tambah DataTables ---
         var table = $('#tabelBarang').DataTable();
 
-        $('#btnSubmit').click(function() {
+       $('#btnSubmit').click(function() {
             let form = document.getElementById('formBarang');
             let tombol = $(this);
 
@@ -183,20 +190,39 @@
             let teksAsli = tombol.text();
             tombol.prop('disabled', true).html('⏳ Memproses...');
 
-            setTimeout(function() {
-                let randomId = 'BRG-' + Math.floor(Math.random() * 1000);
-                let hargaFormat = 'Rp ' + parseInt(harga).toLocaleString('id-ID');
+            $.ajax({
+                url: "{{ route('barang') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    nama: nama,
+                    harga: harga
+                },
+                success: function(response) {
+                    if(response.status === 'success') {
+                        let barangBaru = response.data;
+                        let hargaFormat = 'Rp ' + parseInt(barangBaru.harga).toLocaleString('id-ID');
 
-                table.row.add([
-                    `<input type="checkbox" name="barang_id[]" value="${randomId}">`,
-                    randomId,
-                    nama,
-                    hargaFormat
-                ]).draw(false);
+                        table.row.add([
+                            `<input type="checkbox" name="barang_id[]" value="${barangBaru.id_barang}">`,
+                            barangBaru.id_barang, 
+                            barangBaru.nama,
+                            hargaFormat
+                        ]).draw(false);
 
-                form.reset();
-                tombol.prop('disabled', false).text(teksAsli);
-            }, 1000); 
+                        // Reset form
+                        form.reset();
+                    } else {
+                        alert("Gagal memproses data.");
+                    }
+                    tombol.prop('disabled', false).text(teksAsli);
+                },
+                error: function(xhr) {
+                    alert("Terjadi kesalahan sistem saat menyimpan ke database.");
+                    console.log(xhr.responseText);
+                    tombol.prop('disabled', false).text(teksAsli);
+                }
+            });
         });
 
         // --- TUGAS 3: Modal Edit & Hapus ---

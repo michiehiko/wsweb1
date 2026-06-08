@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Buku;
 use App\Models\Kategori;
 
-class bukuController extends Controller
+class BukuController extends Controller
 {
     public function index()
     {

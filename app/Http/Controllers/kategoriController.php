@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Kategori;
 
 
-class kategoriController extends Controller
+class KategoriController extends Controller
 {
     public function index()
     {

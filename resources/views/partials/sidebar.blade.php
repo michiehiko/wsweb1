@@ -43,10 +43,38 @@
                 </a>
               </li>
 
+              <li class="nav-item {{ request()->is('admin-kantin/wilayah') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('kantin_wilayah') }}">
+                  <span class="menu-title">Wilayah (Axios)</span>
+                  <i class="mdi mdi-map-marker-radius menu-icon"></i>
+                </a>
+              </li>
+
+              <li class="nav-item {{ request()->is('admin-kantin/wilayah_ajax') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('kantin_wilayah_ajax') }}">
+                  <span class="menu-title">Wilayah (AJAX)</span>
+                  <i class="mdi mdi-map-marker-outline menu-icon"></i>
+                </a>
+              </li>
+
+              <li class="nav-item {{ request()->is('admin-kantin/kasir') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('kantin.kasir') }}">
+                  <span class="menu-title">Kasir (POS)</span>
+                  <i class="mdi mdi-cash-register menu-icon"></i>
+                </a>
+              </li>
+
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('cetak.sertifikat') }}" target="_blank">
                   <span class="menu-title">Cetak Sertifikat</span>
                   <i class="mdi mdi-certificate menu-icon"></i>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('cetak.undangan') }}" target="_blank">
+                  <span class="menu-title">Cetak Undangan</span>
+                  <i class="mdi mdi-file-document menu-icon"></i>
                 </a>
               </li>
             </ul>
